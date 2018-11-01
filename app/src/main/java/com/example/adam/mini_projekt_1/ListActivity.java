@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,12 @@ public class ListActivity extends Activity {
         myDB.open();
     }
 
+
+
     public void onAddClick(View v){
         Intent goToAddItem = new Intent(this, AddActivity.class);
         startActivity(goToAddItem);
     }
-
 
 
     private List<ListItem> getItems(){

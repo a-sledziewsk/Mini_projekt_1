@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +20,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     private List<ListItem> list;
     private Context context;
-    private ArrayList<Information> data;
-    private int previousPosition = 0;
     private DBAdapter myDB;
-
 
 
     public MyAdapter(List<ListItem> list_item_list, Context ctx){
@@ -42,9 +40,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public TextView price;
         public TextView quantity;
         public CheckBox checked;
+        public View v;
 
         public ViewHolder(View view) {
             super(view);
+            this.v = view;
             product_name = (TextView) view.findViewById(R.id.product_name_text_view);
             price = (TextView) view.findViewById(R.id.price_text_view);
             quantity = (TextView) view.findViewById(R.id.quantity_text_view);
@@ -54,12 +54,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    String prod_name = product_name.getText().toString();
+
                     if (isChecked){
-                        myDB.changeCheckbox(1, true);
+                        myDB.changeCheckbox(prod_name, true);
                     }
                     else{
-                        myDB.changeCheckbox(1, false);
-
+                        myDB.changeCheckbox(prod_name, false);
                     };
                 }
             });
@@ -69,12 +70,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(MyAdapter.this.context, "Editing item " + product_name.getText(),
-                    Toast.LENGTH_LONG).show();
-
-            //Intent add_item_intent = new Intent(v.getContext(), AddActivity.class);
-            //context.startActivity(add_item_intent);
-
         }
     }
 
@@ -88,17 +83,55 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder h, int position) {
+
+
         ListItem li = list.get(position);
         h.product_name.setText(li.getProductName());
         h.price.setText("" + li.getPrice());
         h.quantity.setText("" + li.getQuantity());
 
+
        if (li.isChecked())
            h.checked.setChecked(true);
        else
            h.checked.setChecked(false);
-    }
 
+       h.v.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View v){
+               Toast.makeText(MyAdapter.this.context, "Editing" ,
+                       Toast.LENGTH_LONG).show();
+
+               TextView prod_name_view;
+               prod_name_view = (TextView) v.findViewById(R.id.product_name_text_view);
+               String prod_text = prod_name_view.getText().toString();
+
+               Intent goToEdit =  new Intent(MyAdapter.this.context, EditActivity.class);
+               goToEdit.putExtra("key", prod_text);
+               MyAdapter.this.context.startActivity(goToEdit);
+
+           }
+       });
+
+
+       h.v.setOnLongClickListener(new View.OnLongClickListener(){
+           @Override
+           public boolean onLongClick(View v){
+               TextView prod_name_view;
+               prod_name_view = (TextView) v.findViewById(R.id.product_name_text_view);
+               String prod_text = prod_name_view.getText().toString();
+
+               myDB.deleteRow(prod_text);
+
+               Toast.makeText(MyAdapter.this.context, prod_text ,
+                       Toast.LENGTH_LONG).show();
+
+
+               return  true;
+           }
+       });
+
+    }
 
 
     @Override
@@ -106,10 +139,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         return list.size();
     }
 
-
-
-
-    public class Information{
-        public int rowId;
-    }
 }

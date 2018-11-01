@@ -18,4 +18,5 @@
         android:layout_height="wrap_content"
         android:text="@string/add_to_list"
         android:onClick="onAddClick"/>
+
 </LinearLayout>

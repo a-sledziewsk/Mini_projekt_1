@@ -62,7 +62,7 @@ public class DBAdapter {
     }
 
     public boolean deleteRow(String prod_name){
-        String where =  DBAdapter.PRODUCT_COLUMN + "=" + prod_name;
+        String where =  DBAdapter.PRODUCT_COLUMN + "=" + "'" + prod_name + "'";
         return db.delete(TABLE_NAME, where, null) != 0;
     }
 
@@ -80,7 +80,7 @@ public class DBAdapter {
 
     // Get row
     public Cursor getRow(String prod_name){
-        String where =  DBAdapter.PRODUCT_COLUMN + "=" + prod_name;
+        String where =  DBAdapter.PRODUCT_COLUMN + "'" + prod_name + "'";
         Cursor c = db.query(false, TABLE_NAME, ALL_KEYS, where, null, null,
                 null, null, null);
 
@@ -116,8 +116,8 @@ public class DBAdapter {
     }
 
     // Change existing row
-    public boolean updateRow(long prod_name, String product_name, int quantity, float price, boolean bought) {
-        String where =  DBAdapter.PRODUCT_COLUMN + "=" + prod_name;
+    public boolean updateRow(String prod_name, String product_name, int quantity, float price, boolean bought) {
+        String where =  DBAdapter.PRODUCT_COLUMN + "=" + "'" + prod_name + "'";
         ContentValues contentValues = new ContentValues();
         contentValues.put(PRODUCT_COLUMN, product_name);
         contentValues.put(QUANTITY_COLUMN, quantity);
@@ -131,13 +131,14 @@ public class DBAdapter {
         return db.update(TABLE_NAME, contentValues, where, null) != 0;
     }
 
-    public void changeCheckbox(int rowId, boolean statusCheckbox){
+    public void changeCheckbox(String prod_name, boolean statusCheckbox){
         int boolIntCheckbox = 0;
         if (statusCheckbox)
             boolIntCheckbox=1;
 
         String query = "UPDATE " + DBAdapter.TABLE_NAME + " SET " + DBAdapter.getBoughtColumn() +
-                "=" + Integer.toString(boolIntCheckbox) + " WHERE id=" + Integer.toString(rowId)  ;
+                "=" + Integer.toString(boolIntCheckbox) + " WHERE " + DBAdapter.getProductColumn() +
+                "="+ "'" + prod_name + "'"  ;
         db.execSQL(query);
     }
 

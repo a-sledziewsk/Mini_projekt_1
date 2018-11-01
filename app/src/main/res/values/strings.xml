@@ -25,4 +25,5 @@
     <string name="db_name">MyDatabase</string>
     <string name="add_product_details_click">Add product</string>
     <string name="add_prod_bought_checkbox">Bought</string>
+    <string name="edit_product">Edit product</string>
 </resources>
