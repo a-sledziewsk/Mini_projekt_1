@@ -31,6 +31,10 @@ public class ListActivity extends Activity {
         setContentView(R.layout.activity_list);
         openDB();
 
+        add_to_list_button = findViewById(R.id.add_to_list_button);
+        add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+
+
         irv = (RecyclerView) findViewById(R.id.rolling_list);
 
         LinearLayoutManager rlm = new LinearLayoutManager(this);

@@ -26,4 +26,13 @@
     <string name="add_product_details_click">Add product</string>
     <string name="add_prod_bought_checkbox">Bought</string>
     <string name="edit_product">Edit product</string>
+    <string name="accept">Accept</string>
+    <string name="black">Black</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="font_color">Font Color</string>
+    <string name="font_size">Font size</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
 </resources>

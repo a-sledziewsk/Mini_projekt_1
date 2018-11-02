@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditActivity extends Activity {
@@ -16,6 +17,11 @@ public class EditActivity extends Activity {
     private EditText add_quantity;
     private EditText add_price;
     private CheckBox bought;
+
+    private TextView productNameTextView;
+    private TextView quantityTextView;
+    private TextView priceTextView;
+
     DBAdapter myDB;
     Intent intentDelivery = getIntent();
 
@@ -27,7 +33,20 @@ public class EditActivity extends Activity {
         add_quantity = (EditText) findViewById(R.id.edit_quantity_input);
         add_price = (EditText) findViewById(R.id.edit_price_input);
         bought = (CheckBox)findViewById((R.id.edit_product_checkbox));
+        add_to_list_button = findViewById(R.id.edit_to_list_button);
+
         this.intentDelivery = getIntent();
+
+        productNameTextView = findViewById(R.id.edit_product_name_label);
+        quantityTextView = findViewById(R.id.edit_quantity_label);
+        priceTextView = findViewById(R.id.edit_price_label);
+
+        productNameTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        quantityTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        priceTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        bought.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+
         openDB();
     }
 

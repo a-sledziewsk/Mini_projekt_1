@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,16 +23,40 @@ public class AddActivity extends Activity {
     private EditText add_quantity;
     private EditText add_price;
     private CheckBox bought;
+
+    private TextView productNameTextView;
+    private TextView quantityTextView;
+    private TextView priceTextView;
     DBAdapter myDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        //add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
         add_product_name = (EditText) findViewById(R.id.add_product_name_input);
         add_quantity = (EditText) findViewById(R.id.add_quantity_input);
         add_price = (EditText) findViewById(R.id.add_price_input);
         bought = (CheckBox)findViewById((R.id.add_product_checkbox));
+        add_to_list_button = findViewById(R.id.add_to_list_button);
+
+        add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        add_quantity.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        add_price.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        bought.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+
+
+        productNameTextView = findViewById(R.id.add_product_name_label);
+        quantityTextView = findViewById(R.id.add_quantity_label);
+        priceTextView = findViewById(R.id.add_price_label);
+
+        productNameTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        quantityTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        priceTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
 
         openDB();
     }

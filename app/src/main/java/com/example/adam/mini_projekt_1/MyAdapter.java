@@ -45,10 +45,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public ViewHolder(View view) {
             super(view);
             this.v = view;
+
             product_name = (TextView) view.findViewById(R.id.product_name_text_view);
             price = (TextView) view.findViewById(R.id.price_text_view);
             quantity = (TextView) view.findViewById(R.id.quantity_text_view);
             checked = (CheckBox) view.findViewById(R.id.checked_checkbox);
+
 
             view.setOnClickListener(this);
             checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -80,15 +82,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         return vh;
     }
 
+
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ViewHolder h, int position) {
-
+    public void onBindViewHolder(ViewHolder h, final int position) {
 
         ListItem li = list.get(position);
         h.product_name.setText(li.getProductName());
         h.price.setText("" + li.getPrice());
         h.quantity.setText("" + li.getQuantity());
+
+        h.product_name.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+        h.price.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+        h.quantity.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));;
+        h.checked.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+
 
 
        if (li.isChecked())
@@ -120,10 +128,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                TextView prod_name_view;
                prod_name_view = (TextView) v.findViewById(R.id.product_name_text_view);
                String prod_text = prod_name_view.getText().toString();
-
+               String msg = "Item " + prod_text + " deleted";
                myDB.deleteRow(prod_text);
-
-               Toast.makeText(MyAdapter.this.context, prod_text ,
+               removeItem(position);
+               Toast.makeText(MyAdapter.this.context, msg ,
                        Toast.LENGTH_LONG).show();
 
 
@@ -133,7 +141,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     }
 
-
+    public void removeItem(int position){
+        list.remove(position);
+        notifyItemRemoved(position);
+    }
     @Override
     public int getItemCount() {
         return list.size();

@@ -16,6 +16,14 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        button_go_to_list = findViewById(R.id.go_to_list_button);
+        button_exit = findViewById(R.id.exit_button);
+        button_settings = findViewById(R.id.settings_button);
+
+        button_settings.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        button_exit.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        button_go_to_list.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
     }
 
 
