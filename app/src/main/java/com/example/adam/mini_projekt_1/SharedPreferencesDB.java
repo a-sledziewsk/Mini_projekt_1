@@ -13,8 +13,12 @@ public class SharedPreferencesDB {
     private final static String MY_PREFS_NAME = "Color preferences";
     private final static int MODE_PRIVATE = 0;
     private final static String COLOR_KEY = "Color";
+    private final static String FONT_KEY = "Font";
+
     private static final int COLOR_BLACK = Color.BLACK;
     private static final String RADIO_BUTTON_STATUS_KEY = "radio_but_stat";
+
+    private static final String RADIO_FONT_BUTTON_STATUS_KEY = "radio_font_but_stat";
 
 
 
@@ -41,6 +45,32 @@ public class SharedPreferencesDB {
     public static int getRadioStatusFromSharedPreferencesDB(Context context){
         SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
         return settings.getInt(RADIO_BUTTON_STATUS_KEY, 1);
+    }
+
+
+    public static void saveFontInSharedPreferencesEditor(Context context, int input){
+
+        SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(FONT_KEY, input);
+        editor.commit();
+    }
+
+    public static int getFontFromSharePreferences(Context context){
+        SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getInt(FONT_KEY, COLOR_BLACK);
+    }
+
+    public static void saveRadioFontButtonCheckedsInSharedPreferencesDB(Context context, int index){
+        SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(RADIO_FONT_BUTTON_STATUS_KEY, index);
+        editor.commit();
+    }
+
+    public static int getRadioFontStatusFromSharedPreferencesDB(Context context){
+        SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getInt(RADIO_FONT_BUTTON_STATUS_KEY, 1);
     }
 
 }

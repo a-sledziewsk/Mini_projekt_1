@@ -40,6 +40,14 @@ public class SettingsActivity extends Activity {
     private RadioButton largeButton;
 
 
+    private static final String BUTTON_SMALL_NAME = "Small";
+    private static final String BUTTON_MEDIUM_NAME ="Medium";
+    private static final String BUTTON_LARGE_NAME ="Large";
+
+    private static final int SMALL_FONT = 10;
+    private static final int MEDIUM_FONT = 14;
+    private static final int LARGE_FONT = 18;
+
     private static final int COLOR_RED = Color.RED;
     private static final int COLOR_BLUE = Color.BLUE;
     private static final int COLOR_BLACK = Color.BLACK;
@@ -55,11 +63,13 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
 
         fontColorTextView = findViewById(R.id.font_color_text_view);
+        fontSizeTextView = findViewById(R.id.font_size_radio_group_text_view);
         addListenerOnButton();
 
         fontColorTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
         acceptButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
+        acceptFontButton = findViewById(R.id.accept_font_size);
         fontSizeTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
         acceptFontButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
@@ -67,9 +77,13 @@ public class SettingsActivity extends Activity {
         blueButton = findViewById(R.id.blueColorButton);
         blackButton = findViewById((R.id.blackColorButton));
 
-        smallButton = findViewById()
+        smallButton = findViewById(R.id.font_small);
+        mediumButton = findViewById(R.id.font_medium);
+        largeButton = findViewById(R.id.font_large);
 
-
+        smallButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+        mediumButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+        largeButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
 
         ColorStateList colorStateList = acceptButton.getTextColors();
@@ -92,6 +106,8 @@ public class SettingsActivity extends Activity {
     private void addListenerOnButton() {
         acceptButton = findViewById(R.id.accept_color_button);
         radioGroup = findViewById(R.id.colorRadioGroup);
+        radioFontGroup = findViewById(R.id.fontRadioGroup);
+
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +141,33 @@ public class SettingsActivity extends Activity {
 
 
                 Toast.makeText(SettingsActivity.this, buttonName , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //TODO: Dodac opcje zmiany rozmiaru czcionki
+        acceptFontButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acceptFontButton = findViewById(R.id.accept_font_size);
+
+                int selectFontId = radioFontGroup.getCheckedRadioButtonId();
+                SharedPreferencesDB.saveRadioFontButtonCheckedsInSharedPreferencesDB(
+                        SettingsActivity.this, selectFontId);
+
+                String fontButtonName = (String) radioFontButton.getText();
+
+                if (fontButtonName.equals(BUTTON_SMALL_NAME)){
+                    SharedPreferencesDB.saveFontInSharedPreferencesEditor(SettingsActivity.this, SMALL_FONT);
+                }
+
+                else if (fontButtonName.equals(BUTTON_MEDIUM_NAME)){
+                    SharedPreferencesDB.saveFontInSharedPreferencesEditor(SettingsActivity.this, MEDIUM_FONT);
+                }
+
+                else if (fontButtonName.equals(BUTTON_LARGE_NAME)){
+                    SharedPreferencesDB.saveFontInSharedPreferencesEditor(SettingsActivity.this, LARGE_FONT);
+                }
+
             }
         });
 
