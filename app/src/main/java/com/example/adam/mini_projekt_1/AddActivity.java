@@ -75,8 +75,6 @@ public class AddActivity extends Activity {
         myDB.open();
     }
 
-
-
     public void addProductDetailsClick(View view){
         String productName = add_product_name.getText().toString();
         String quantity = add_quantity.getText().toString();
@@ -93,12 +91,6 @@ public class AddActivity extends Activity {
                     Toast.LENGTH_LONG).show();
         }
 
-
-
-
-
-
     }
-
 
 }
