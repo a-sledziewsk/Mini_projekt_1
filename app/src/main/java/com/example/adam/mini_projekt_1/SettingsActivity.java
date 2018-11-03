@@ -48,9 +48,9 @@ public class SettingsActivity extends Activity {
     private static final float MEDIUM_FONT = 14;
     private static final float LARGE_FONT = 18;
 
-    private static final float LARGE_FONT_PIXELS = 54;
-    private static final float SMALL_FONT_PIXELS = 30;
-    private static final float MEDIUM_FONT_PIXELS = 42;
+    private static final int LARGE_FONT_PIXELS = 54;
+    private static final int SMALL_FONT_PIXELS = 30;
+    private static final int MEDIUM_FONT_PIXELS = 42;
 
 
     private static final int COLOR_RED = Color.RED;
@@ -90,6 +90,8 @@ public class SettingsActivity extends Activity {
         largeButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
 
+        acceptFontButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+        acceptButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
 
         fontColorTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
         fontSizeTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
@@ -118,26 +120,19 @@ public class SettingsActivity extends Activity {
                 break;
         }
 
-        int textSize = Math.round(acceptFontButton.getTextSize());
-        float textSizeTextView = fontColorTextView.getTextSize();
+        int textSize = Math.round(fontSizeTextView.getTextSize());
 
-
-
-        final int smallSizeInt = 10;
-        final int mediumSizeInt = 14;
-        final int largeSizeInt =18;
 
         switch (textSize){
-            case smallSizeInt:
+            case SMALL_FONT_PIXELS:
                 smallButton.setChecked(true);
                 break;
-            case mediumSizeInt:
+            case MEDIUM_FONT_PIXELS:
                 mediumButton.setChecked(true);
                 break;
-            case largeSizeInt:
+            case LARGE_FONT_PIXELS:
                 largeButton.setChecked(true);
                 break;
-
 
         }
 
@@ -180,6 +175,11 @@ public class SettingsActivity extends Activity {
 
                 acceptButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
                 fontColorTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+
+                smallButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+                mediumButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+                largeButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+                fontSizeTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
 
 

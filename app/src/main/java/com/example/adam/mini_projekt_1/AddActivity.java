@@ -50,6 +50,11 @@ public class AddActivity extends Activity {
         bought.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
 
 
+        add_to_list_button.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        add_quantity.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        add_price.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        bought.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+
         productNameTextView = findViewById(R.id.add_product_name_label);
         quantityTextView = findViewById(R.id.add_quantity_label);
         priceTextView = findViewById(R.id.add_price_label);
@@ -57,6 +62,10 @@ public class AddActivity extends Activity {
         productNameTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
         quantityTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
         priceTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+
+        productNameTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        quantityTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        priceTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
 
         openDB();
     }
@@ -74,7 +83,7 @@ public class AddActivity extends Activity {
         String price = add_price.getText().toString();
         boolean boughtBoolean = bought.isChecked();
 
-        if (productName.length()>0 && quantity!=null && price!=null) {
+        if (productName.length()>0 &&  price.length()>0&& quantity.length()>0) {
             myDB.insertRow(productName, Integer.parseInt(quantity), Float.parseFloat(price), boughtBoolean);
             Intent returnToListActivity = new Intent(this, ListActivity.class);
             startActivity(returnToListActivity);

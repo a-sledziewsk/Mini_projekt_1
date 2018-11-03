@@ -47,6 +47,13 @@ public class EditActivity extends Activity {
         bought.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
         add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
 
+
+        productNameTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        quantityTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        priceTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        bought.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        add_to_list_button.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+
         openDB();
     }
 
@@ -63,7 +70,7 @@ public class EditActivity extends Activity {
         boolean boughtBoolean = bought.isChecked();
         String prod_name_id = this.intentDelivery.getStringExtra("key");
 
-        if (productName.length()>0 && quantity!=null && price!=null) {
+        if (productName.length()>0 && price.length()>0&& quantity.length()>0) {
             myDB.updateRow(prod_name_id, productName, Integer.parseInt(quantity), Float.parseFloat(price), boughtBoolean);
             Intent returnToListActivity = new Intent(this, ListActivity.class);
             startActivity(returnToListActivity);

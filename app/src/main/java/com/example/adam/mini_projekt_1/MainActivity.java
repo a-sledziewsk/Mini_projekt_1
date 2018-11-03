@@ -24,6 +24,10 @@ public class MainActivity extends Activity {
         button_settings.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
         button_exit.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
         button_go_to_list.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+
+        button_settings.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        button_exit.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+        button_go_to_list.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
     }
 
 

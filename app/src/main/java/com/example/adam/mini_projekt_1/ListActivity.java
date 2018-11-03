@@ -33,7 +33,7 @@ public class ListActivity extends Activity {
 
         add_to_list_button = findViewById(R.id.add_to_list_button);
         add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
-
+        add_to_list_button.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
 
         irv = (RecyclerView) findViewById(R.id.rolling_list);
 

@@ -42,6 +42,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public CheckBox checked;
         public View v;
 
+        public TextView product_name_label;
+        public TextView price_label;
+        public TextView quantity_label;
+
         public ViewHolder(View view) {
             super(view);
             this.v = view;
@@ -50,6 +54,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             price = (TextView) view.findViewById(R.id.price_text_view);
             quantity = (TextView) view.findViewById(R.id.quantity_text_view);
             checked = (CheckBox) view.findViewById(R.id.checked_checkbox);
+
+            product_name_label = view.findViewById(R.id.prod_name_label);
+            price_label = view.findViewById(R.id.price_label);
+            quantity_label = view.findViewById(R.id.quantity_label);
+
+
+            product_name_label.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+            price_label.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+            quantity_label.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+
+            product_name_label.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
+            price_label.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
+            quantity_label.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
 
 
             view.setOnClickListener(this);
@@ -96,6 +113,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         h.price.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
         h.quantity.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));;
         h.checked.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(context));
+
+        h.product_name.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
+        h.price.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
+        h.quantity.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
+        h.checked.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
 
 
 
