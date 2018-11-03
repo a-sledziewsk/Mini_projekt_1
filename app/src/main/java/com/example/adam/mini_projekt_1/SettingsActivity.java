@@ -44,9 +44,14 @@ public class SettingsActivity extends Activity {
     private static final String BUTTON_MEDIUM_NAME ="Medium";
     private static final String BUTTON_LARGE_NAME ="Large";
 
-    private static final int SMALL_FONT = 10;
-    private static final int MEDIUM_FONT = 14;
-    private static final int LARGE_FONT = 18;
+    private static final float SMALL_FONT = 10;
+    private static final float MEDIUM_FONT = 14;
+    private static final float LARGE_FONT = 18;
+
+    private static final float LARGE_FONT_PIXELS = 54;
+    private static final float SMALL_FONT_PIXELS = 30;
+    private static final float MEDIUM_FONT_PIXELS = 42;
+
 
     private static final int COLOR_RED = Color.RED;
     private static final int COLOR_BLUE = Color.BLUE;
@@ -69,7 +74,6 @@ public class SettingsActivity extends Activity {
         fontColorTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
         acceptButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
-        acceptFontButton = findViewById(R.id.accept_font_size);
         fontSizeTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
         acceptFontButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
@@ -86,6 +90,19 @@ public class SettingsActivity extends Activity {
         largeButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
 
+
+        fontColorTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+        fontSizeTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+        redButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+        blackButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+        blueButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+        smallButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+        mediumButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+        largeButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+
         ColorStateList colorStateList = acceptButton.getTextColors();
         int butColor = colorStateList.getDefaultColor();
 
@@ -100,11 +117,37 @@ public class SettingsActivity extends Activity {
                 blackButton.setChecked(true);
                 break;
         }
+
+        int textSize = Math.round(acceptFontButton.getTextSize());
+        float textSizeTextView = fontColorTextView.getTextSize();
+
+
+
+        final int smallSizeInt = 10;
+        final int mediumSizeInt = 14;
+        final int largeSizeInt =18;
+
+        switch (textSize){
+            case smallSizeInt:
+                smallButton.setChecked(true);
+                break;
+            case mediumSizeInt:
+                mediumButton.setChecked(true);
+                break;
+            case largeSizeInt:
+                largeButton.setChecked(true);
+                break;
+
+
+        }
+
     }
 
 
     private void addListenerOnButton() {
         acceptButton = findViewById(R.id.accept_color_button);
+        acceptFontButton = findViewById(R.id.accept_font_size);
+
         radioGroup = findViewById(R.id.colorRadioGroup);
         radioFontGroup = findViewById(R.id.fontRadioGroup);
 
@@ -140,7 +183,8 @@ public class SettingsActivity extends Activity {
 
 
 
-                Toast.makeText(SettingsActivity.this, buttonName , Toast.LENGTH_SHORT).show();
+                String msg = buttonName + " selected";
+                Toast.makeText(SettingsActivity.this, msg , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -148,11 +192,11 @@ public class SettingsActivity extends Activity {
         acceptFontButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acceptFontButton = findViewById(R.id.accept_font_size);
 
                 int selectFontId = radioFontGroup.getCheckedRadioButtonId();
-                SharedPreferencesDB.saveRadioFontButtonCheckedsInSharedPreferencesDB(
+                SharedPreferencesDB.saveRadioFontButtonCheckedInSharedPreferencesDB(
                         SettingsActivity.this, selectFontId);
+                radioFontButton = (RadioButton) findViewById(selectFontId) ;
 
                 String fontButtonName = (String) radioFontButton.getText();
 
@@ -167,6 +211,26 @@ public class SettingsActivity extends Activity {
                 else if (fontButtonName.equals(BUTTON_LARGE_NAME)){
                     SharedPreferencesDB.saveFontInSharedPreferencesEditor(SettingsActivity.this, LARGE_FONT);
                 }
+
+                acceptButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+                acceptFontButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+                fontColorTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+
+                fontSizeTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+
+                redButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+                blackButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+                blueButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+                smallButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+                mediumButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+                largeButton.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(SettingsActivity.this));
+
+                String msg = fontButtonName + " selected";
+                Toast.makeText(SettingsActivity.this, msg , Toast.LENGTH_SHORT).show();
+
 
             }
         });

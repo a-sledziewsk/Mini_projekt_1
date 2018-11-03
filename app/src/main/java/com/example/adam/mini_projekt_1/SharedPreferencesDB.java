@@ -48,20 +48,20 @@ public class SharedPreferencesDB {
     }
 
 
-    public static void saveFontInSharedPreferencesEditor(Context context, int input){
+    public static void saveFontInSharedPreferencesEditor(Context context, float input){
 
         SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(FONT_KEY, input);
+        editor.putFloat(FONT_KEY, input);
         editor.commit();
     }
 
-    public static int getFontFromSharePreferences(Context context){
+    public static float getFontFromSharePreferences(Context context){
         SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
-        return settings.getInt(FONT_KEY, COLOR_BLACK);
+        return settings.getFloat(FONT_KEY, 12);
     }
 
-    public static void saveRadioFontButtonCheckedsInSharedPreferencesDB(Context context, int index){
+    public static void saveRadioFontButtonCheckedInSharedPreferencesDB(Context context, int index){
         SharedPreferences settings = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(RADIO_FONT_BUTTON_STATUS_KEY, index);
