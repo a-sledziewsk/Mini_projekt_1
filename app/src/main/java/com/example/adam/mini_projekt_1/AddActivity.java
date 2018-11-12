@@ -3,6 +3,7 @@ package com.example.adam.mini_projekt_1;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
@@ -67,6 +68,11 @@ public class AddActivity extends Activity {
         quantityTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
         priceTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
 
+        IntentFilter filter = new IntentFilter("com.example.adam.mini_projekt_1");
+
+        MyBroadcastReceiver receiver = new MyBroadcastReceiver();
+        registerReceiver(receiver, filter);
+
         openDB();
     }
 
@@ -84,6 +90,16 @@ public class AddActivity extends Activity {
         if (productName.length()>0 &&  price.length()>0&& quantity.length()>0) {
             myDB.insertRow(productName, Integer.parseInt(quantity), Float.parseFloat(price), boughtBoolean);
             Intent returnToListActivity = new Intent(this, ListActivity.class);
+
+            Intent broadcastIntent = new Intent();
+            broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            broadcastIntent.setAction("com.example.adam.mini_projekt_1");
+
+            broadcastIntent.putExtra("Product name", productName);
+            broadcastIntent.putExtra("Quantity", quantity);
+            broadcastIntent.putExtra("Price", price);
+
+            sendBroadcast(broadcastIntent);
             startActivity(returnToListActivity);
         }
         else{
@@ -92,5 +108,6 @@ public class AddActivity extends Activity {
         }
 
     }
+
 
 }

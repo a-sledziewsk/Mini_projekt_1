@@ -174,6 +174,7 @@ public class SettingsActivity extends Activity {
 
 
                 acceptButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
+                acceptFontButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
                 fontColorTextView.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));
 
                 smallButton.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(SettingsActivity.this));

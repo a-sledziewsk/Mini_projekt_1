@@ -48,6 +48,28 @@ public class ListActivity extends Activity {
         MyAdapter rva = new MyAdapter(getItems(), this);
         irv.setAdapter(rva);
     }
+    protected void onResume() {
+        super.onResume();
+        openDB();
+
+        add_to_list_button = findViewById(R.id.add_to_list_button);
+        add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        add_to_list_button.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
+
+        irv = (RecyclerView) findViewById(R.id.rolling_list);
+
+        LinearLayoutManager rlm = new LinearLayoutManager(this);
+        irv.setLayoutManager(rlm);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                irv.getContext(), rlm.getOrientation());
+
+        irv.addItemDecoration(dividerItemDecoration);
+
+        MyAdapter rva = new MyAdapter(getItems(), this);
+        irv.setAdapter(rva);
+
+    }
 
 
 
@@ -79,7 +101,7 @@ public class ListActivity extends Activity {
 
             prodName = cursor.getString((cursor.getColumnIndex(DBAdapter.getProductColumn())));
             price = cursor.getFloat(cursor.getColumnIndex(DBAdapter.getPriceColumn()));
-            quantity = cursor.getInt(cursor.getColumnIndex(DBAdapter.getPriceColumn()));
+            quantity = cursor.getInt(cursor.getColumnIndex(DBAdapter.getQuantityColumn()));
             boughtIntBool = cursor.getInt(cursor.getColumnIndex(DBAdapter.getBoughtColumn()));
 
             if (boughtIntBool==1)
