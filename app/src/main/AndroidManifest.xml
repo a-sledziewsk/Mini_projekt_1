@@ -3,8 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.adam.mini_projekt_1">
 
+
+    <permission-group
+        android:name="com.example.adam.mini_projekt_1.my_permissions"
+        android:label="my permissions group" />
+
+    <permission
+        android:name="com.example.adam.mini_projekt_1.permission.MY_PERMISSION"
+        android:label="MY_PERMISSION"
+        android:permissionGroup="com.examples.my_permissions"
+        android:protectionLevel="dangerous" />
+
+    <uses-permission android:name="com.example.adam.mini_projekt_1.permission.MY_PERMISSION"
+        android:maxSdkVersion="26" />
+
+
     <application
         android:allowBackup="true"
+        android:exported="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -31,6 +47,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+            <intent-filter>
+                <action android:name="com.example.adam.mini_projekt_1.ListActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+
         </activity>
         <activity android:name=".AddActivity" />
         <activity android:name=".EditActivity"></activity>

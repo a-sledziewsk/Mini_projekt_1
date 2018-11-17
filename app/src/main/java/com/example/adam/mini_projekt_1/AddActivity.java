@@ -1,6 +1,7 @@
 package com.example.adam.mini_projekt_1;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -30,7 +31,7 @@ public class AddActivity extends Activity {
     private TextView priceTextView;
     DBAdapter myDB;
 
-
+    private static final String permission = "com.example.adam.mini_projekt_1.permission.MY_PERMISSION";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
@@ -68,11 +69,6 @@ public class AddActivity extends Activity {
         quantityTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
         priceTextView.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(this));
 
-        IntentFilter filter = new IntentFilter("com.example.adam.mini_projekt_1");
-
-        MyBroadcastReceiver receiver = new MyBroadcastReceiver();
-        registerReceiver(receiver, filter);
-
         openDB();
     }
 
@@ -91,16 +87,15 @@ public class AddActivity extends Activity {
             myDB.insertRow(productName, Integer.parseInt(quantity), Float.parseFloat(price), boughtBoolean);
             Intent returnToListActivity = new Intent(this, ListActivity.class);
 
-            Intent broadcastIntent = new Intent();
-            broadcastIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-            broadcastIntent.setAction("com.example.adam.mini_projekt_1");
 
-            broadcastIntent.putExtra("Product name", productName);
-            broadcastIntent.putExtra("Quantity", quantity);
-            broadcastIntent.putExtra("Price", price);
+            final Intent intent = new Intent();
+            intent.setAction("com.example.adam.mini_projekt_1");
+            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            intent.putExtra("Product name", productName);
+            intent.putExtra("Quantity", quantity);
+            intent.putExtra("Price", price);
+            sendBroadcast(intent, permission);
 
-            sendBroadcast(broadcastIntent);
-            startActivity(returnToListActivity);
         }
         else{
             Toast.makeText(this, "Fill all text fields!",
