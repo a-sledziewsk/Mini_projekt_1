@@ -31,7 +31,7 @@ public class AddActivity extends Activity {
     private TextView priceTextView;
     DBAdapter myDB;
 
-    private static final String permission = "com.example.adam.mini_projekt_1.permission.MY_PERMISSION";
+    //private static final String permission = "com.example.adam.mini_projekt_1.permission.MY_PERMISSION";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
@@ -94,7 +94,8 @@ public class AddActivity extends Activity {
             intent.putExtra("Product name", productName);
             intent.putExtra("Quantity", quantity);
             intent.putExtra("Price", price);
-            sendBroadcast(intent, permission);
+            sendBroadcast(intent, "com.example.adam.mini_projekt_1.permission.MY_PERMISSION");
+            startActivity(returnToListActivity);
 
         }
         else{

@@ -3,19 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.adam.mini_projekt_1">
 
-
-    <permission-group
-        android:name="com.example.adam.mini_projekt_1.my_permissions"
-        android:label="my permissions group" />
-
     <permission
         android:name="com.example.adam.mini_projekt_1.permission.MY_PERMISSION"
-        android:label="MY_PERMISSION"
-        android:permissionGroup="com.examples.my_permissions"
-        android:protectionLevel="dangerous" />
+        android:label="MY_PERMISSION" />
 
-    <uses-permission android:name="com.example.adam.mini_projekt_1.permission.MY_PERMISSION"
-        android:maxSdkVersion="26" />
+    <uses-permission android:name="com.example.adam.mini_projekt_1.permission.MY_PERMISSION" />
 
 
     <application
@@ -57,11 +49,6 @@
         <activity android:name=".AddActivity" />
         <activity android:name=".EditActivity"></activity>
 
-    <receiver android:name="MyBroadcastReceiver">
-        <intent-filter>
-            <action android:name="com.example.adam.mini_projekt_1"/>
-        </intent-filter>
-    </receiver>
     </application>
 
 </manifest>
