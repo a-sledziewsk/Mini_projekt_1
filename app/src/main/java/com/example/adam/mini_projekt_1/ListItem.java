@@ -14,6 +14,11 @@ public class ListItem {
     }
 
 
+    ListItem(){
+
+    }
+
+
     public String getProductName() {
         return productName;
     }

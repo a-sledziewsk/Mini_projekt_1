@@ -3,6 +3,8 @@ package com.example.adam.mini_projekt_1;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +30,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     private List<ListItem> list;
     private Context context;
     private DBAdapter myDB;
+    private DatabaseReference mDatabase;
+
 
 
     public MyAdapter(List<ListItem> list_item_list, Context ctx){
@@ -68,19 +79,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             price_label.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
             quantity_label.setTextSize(SharedPreferencesDB.getFontFromSharePreferences(context));
 
+            //TODO checkbox gets value from DB
+
 
             view.setOnClickListener(this);
             checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                     String prod_name = product_name.getText().toString();
+                    mDatabase = FirebaseDatabase.getInstance().getReference("ProductList");
+                    Query productQuery = mDatabase.orderByChild("productName").equalTo(prod_name);
 
-                    if (isChecked){
-                        myDB.changeCheckbox(prod_name, true);
-                    }
-                    else{
-                        myDB.changeCheckbox(prod_name, false);
-                    };
+                    productQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot productSnapshot: dataSnapshot.getChildren()){
+                                productSnapshot.getRef().child("checked").setValue(isChecked);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             });
 
@@ -143,7 +166,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
            }
        });
 
-
        h.v.setOnLongClickListener(new View.OnLongClickListener(){
            @Override
            public boolean onLongClick(View v){
@@ -151,8 +173,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                prod_name_view = (TextView) v.findViewById(R.id.product_name_text_view);
                String prod_text = prod_name_view.getText().toString();
                String msg = "Item " + prod_text + " deleted";
+
+
+               //TODO Deletion of item in list
+               mDatabase = FirebaseDatabase.getInstance().getReference("ProductList");
+               Query productQuery = mDatabase.orderByChild("productName").equalTo(prod_text);
+
+               productQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       for (DataSnapshot productSnapshot: dataSnapshot.getChildren()){
+                           productSnapshot.getRef().removeValue();
+                       }
+                       removeItem(position);
+
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                   }
+               });
+
                myDB.deleteRow(prod_text);
-               removeItem(position);
                Toast.makeText(MyAdapter.this.context, msg ,
                        Toast.LENGTH_LONG).show();
 

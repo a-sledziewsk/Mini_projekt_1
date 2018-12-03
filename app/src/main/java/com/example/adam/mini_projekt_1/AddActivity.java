@@ -1,14 +1,7 @@
 package com.example.adam.mini_projekt_1;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +9,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class AddActivity extends Activity {
@@ -29,17 +25,19 @@ public class AddActivity extends Activity {
     private TextView productNameTextView;
     private TextView quantityTextView;
     private TextView priceTextView;
+    private DatabaseReference mDatabase;
+
     DBAdapter myDB;
 
-    //private static final String permission = "com.example.adam.mini_projekt_1.permission.MY_PERMISSION";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        //add_to_list_button.setTextColor(SharedPreferencesDB.getColorFromSharePreferences(this));
+        mDatabase = FirebaseDatabase.getInstance().getReference("ProductList");
+
+
         add_product_name = (EditText) findViewById(R.id.add_product_name_input);
         add_quantity = (EditText) findViewById(R.id.add_quantity_input);
         add_price = (EditText) findViewById(R.id.add_price_input);
@@ -84,9 +82,12 @@ public class AddActivity extends Activity {
         boolean boughtBoolean = bought.isChecked();
 
         if (productName.length()>0 &&  price.length()>0&& quantity.length()>0) {
-            myDB.insertRow(productName, Integer.parseInt(quantity), Float.parseFloat(price), boughtBoolean);
+
             Intent returnToListActivity = new Intent(this, ListActivity.class);
 
+            //TODO: writing to DB
+
+            writeNewProduct(productName, Float.parseFloat(price), Integer.parseInt(quantity),  boughtBoolean);
 
             final Intent intent = new Intent();
             intent.setAction("com.example.adam.mini_projekt_1");
@@ -106,4 +107,12 @@ public class AddActivity extends Activity {
     }
 
 
+    //TODO adding to DB
+    private void writeNewProduct(String productName, float price, int quantity, boolean bought) {
+        DatabaseReference childRef = mDatabase.push();
+
+        ListItem listItem = new ListItem(productName, price, quantity, bought);
+        childRef.setValue(listItem);
+
+    }
 }

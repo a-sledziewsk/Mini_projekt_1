@@ -11,17 +11,19 @@ public class DBAdapter {
     private static final int DATABASE_VERSION = 1;
     private static final String MY_DATABASE_NAME = "My database";
     private static final String TABLE_NAME = "items_tables";
+    private static final String KEY_COLUMN = "Key_firebase";
     private static final String PRODUCT_COLUMN = "Product_name";
     private static final String PRICE_COLUMN = "Price";
     private static final String QUANTITY_COLUMN = "Quantity";
     private static final String BOUGHT_COLUMN = "Bought";
     private static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + PRODUCT_COLUMN + " TEXT, " + QUANTITY_COLUMN + " INT, " +
+                    + PRODUCT_COLUMN + " TEXT, "+ KEY_COLUMN
+                    + " TEXT, "+ QUANTITY_COLUMN + " INT, " +
                     PRICE_COLUMN + " REAL, " +
                     BOUGHT_COLUMN + " INT);";
 
-    private static final  String[] ALL_KEYS = new String[]{PRODUCT_COLUMN,
+    private static final  String[] ALL_KEYS = new String[]{PRODUCT_COLUMN, KEY_COLUMN,
             QUANTITY_COLUMN, PRICE_COLUMN, BOUGHT_COLUMN};
 
 
@@ -47,8 +49,9 @@ public class DBAdapter {
     }
 
     // Add a bew set of values to be inserted into db
-    public long insertRow(String product_name, int quantity, float price, boolean bought){
+    public long insertRow(String product_name, String key_firebase, int quantity, float price, boolean bought){
         ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_COLUMN, key_firebase);
         contentValues.put(PRICE_COLUMN, price);
         contentValues.put(PRODUCT_COLUMN, product_name);
         contentValues.put(QUANTITY_COLUMN, quantity);
@@ -80,7 +83,7 @@ public class DBAdapter {
 
     // Get row
     public Cursor getRow(String prod_name){
-        String where =  DBAdapter.PRODUCT_COLUMN + "'" + prod_name + "'";
+        String where =  DBAdapter.PRODUCT_COLUMN + "=" +"'" + prod_name + "'";
         Cursor c = db.query(false, TABLE_NAME, ALL_KEYS, where, null, null,
                 null, null, null);
 
