@@ -3,8 +3,13 @@ package com.example.adam.mini_projekt_1;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 public class MainActivity extends Activity {
@@ -59,6 +64,18 @@ public class MainActivity extends Activity {
 
     public void settingsClick(View view){
         Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void SignOutClick(View view){
+        Intent intent = new Intent(this, AuthActivity.class);
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
         startActivity(intent);
     }
 

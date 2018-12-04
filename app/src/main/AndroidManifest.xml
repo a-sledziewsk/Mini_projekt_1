@@ -9,7 +9,6 @@
 
     <uses-permission android:name="com.example.adam.mini_projekt_1.permission.MY_PERMISSION" />
 
-
     <application
         android:allowBackup="true"
         android:exported="true"
@@ -19,13 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity">
@@ -39,16 +32,23 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+
             <intent-filter>
                 <action android:name="com.example.adam.mini_projekt_1.ListActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-
         </activity>
         <activity android:name=".AddActivity" />
-        <activity android:name=".EditActivity"></activity>
+        <activity android:name=".EditActivity" />
+        <activity android:name=".AuthActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AuthSignOut"></activity>
     </application>
 
 </manifest>
